@@ -1,4 +1,34 @@
-<?php include '../includes/header.php'; ?>
+<?php
+// donate.php
+// Include database connection at the top
+require_once __DIR__ . '/../includes/db_connect.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['category'])) {
+    $category = $conn->real_escape_string($_POST['category']);
+    $donator_number = $conn->real_escape_string($_POST['donator_number']);
+    $amount = $conn->real_escape_string($_POST['amount']);
+    error_log("Donation amount: " . $amount); // Debug log
+    // Rest of the code...
+    $payment_status = 'Pending';
+    $tran_id = "SSLCZ_TEST_" . uniqid();
+
+    $sql = "INSERT INTO donations (category, donator_number, amount, payment_status, tran_id) 
+            VALUES ('$category', '$donator_number', '$amount', '$payment_status', '$tran_id')";
+
+    if ($conn->query($sql)) {
+        // Redirect to payment page
+        header("Location: ../payment/payment.php?amount=" . urlencode($amount) . "&tran_id=" . urlencode($tran_id));
+        exit; // Ensure script stops after redirect
+    } else {
+        $error = "Error: " . $conn->error;
+    }
+    $conn->close();
+}
+
+
+// Include header after logic (if it contains output)
+include '../includes/header.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +45,9 @@
         .head {
             background-color: #008e48;
             color: white;
-            text-align: center; font-size: 34px;font-weight: bold;
+            text-align: center;
+            font-size: 34px;
+            font-weight: bold;
             padding: 1em;
         }
         .container {
@@ -105,41 +137,12 @@
             </form>
         </div>
     </div>
-</body>
-</html>
-<?php
-// db_config.php
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db = 'assunnah';
 
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
-
-// Process form
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $category = $conn->real_escape_string($_POST['category']);
-    $donator_number = $conn->real_escape_string($_POST['donator_number']);
-    $amount = $conn->real_escape_string($_POST['amount']);
-
-    // For now, we just mark payment_status as 'Pending' (later you’ll update after SSLCommerz callback)
-    $payment_status = 'Pending';
-
-    $sql = "INSERT INTO donations (category, donator_number, amount, payment_status) 
-            VALUES ('$category', '$donator_number', '$amount', '$payment_status')";
-
-    if ($conn->query($sql)) {
-        echo "Donation record saved! Now redirecting to SSLCommerz...";
-        // Redirect to payment gateway page (this will be wired later)
-    } else {
-        echo "Error: " . $conn->error;
+    <?php
+    // Display error if any
+    if (isset($error)) {
+        echo "<p style='color:red;text-align:center;'>$error</p>";
     }
-}
+    ?>
 
-$conn->close();
-?>
-
-<?php include '../includes/footer.php'; ?>
+    <?php include '../includes/footer.php'; ?>

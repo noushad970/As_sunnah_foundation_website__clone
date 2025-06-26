@@ -1,10 +1,10 @@
 <?php include '../includes/header.php'; ?>
 <?php
 // Database connection
-$servername = "localhost";
-$username = "root"; // Replace with your MySQL username
-$password = ""; // Replace with your MySQL password
-$dbname = "assunnah";
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db   = 'assunnah';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -28,6 +28,60 @@ $default_project = !empty($projects) ? array_key_first($projects) : "";
 
 <!DOCTYPE html>
 <html lang="en">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.head {
+    background-color: #008e48;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.sidebar {
+    width: 200px;
+    background-color: #fff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+.sidebar button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    background-color: transparent; /* No background color */
+    cursor: pointer;
+    text-align: left;
+    color: #000; /* Normal text color */
+}
+.sidebar button.active {
+    color: #27ae60; /* Green color for active button */
+}
+.sidebar button:hover {
+    color: #27ae60; /* Green hover effect */
+}
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+.content h2 {
+    margin-top: 0;
+    color: #000; /* Black for description title */
+}
+    </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,5 +131,4 @@ $default_project = !empty($projects) ? array_key_first($projects) : "";
     </script>
 </body>
 </html>
-<link rel="stylesheet" href="../assets/css/ongoing_project.css">
 <?php include '../includes/footer.php'; ?>
