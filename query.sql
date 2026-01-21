@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS assumah;
+CREATE DATABASE IF NOT EXISTS assunnah;
 
-USE assumah;
+USE assunnah;
 
 CREATE TABLE admin_users (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
@@ -8,7 +8,7 @@ CREATE TABLE admin_users (
     password VARCHAR(255)
 );
 
-CREATE TABLE assunnah_donations (
+CREATE TABLE donations (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     category VARCHAR(100),
     donor_number VARCHAR(20),
@@ -21,7 +21,7 @@ CREATE TABLE assunnah_donations (
     bank_tran_id VARCHAR(50)
 );
 
-CREATE TABLE assunnah_contact_submissions (
+CREATE TABLE contact_submissions (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
     email VARCHAR(100),
@@ -30,19 +30,19 @@ CREATE TABLE assunnah_contact_submissions (
     submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE assunnah_gallery (
+CREATE TABLE gallery (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     image_title VARCHAR(100),
     image VARCHAR(255)
 );
 
-CREATE TABLE assunnah_projects (
+CREATE TABLE projects (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255),
     description TEXT
 );
 
-CREATE TABLE assunnah_membership_applications (
+CREATE TABLE membership_applications (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     member_type VARCHAR(50),
     name VARCHAR(100),
@@ -57,7 +57,7 @@ CREATE TABLE assunnah_membership_applications (
     membership_status VARCHAR(20)
 );
 
-CREATE TABLE assunnah_volunteer_applications (
+CREATE TABLE volunteer_applications (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
     probashi TINYINT(1),
@@ -77,13 +77,13 @@ CREATE TABLE assunnah_volunteer_applications (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE assunnah_temp_opt (
+CREATE TABLE temp_opt (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(100),
     otp VARCHAR(6)
 );
 
-CREATE TABLE assunnah_ongoing_project (
+CREATE TABLE ongoing_project (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255),
     description TEXT

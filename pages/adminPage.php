@@ -140,7 +140,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 <main>
   <h2>Admin Dashboard</h2>
   <div class="button-grid">
-    <a href="completed_project.php" class="btn">Completed Project</a>
+    <a href="completed_project.php" class="btn">Completed Projects</a>
     <a href="ongoing_project_admin.php" class="btn">Ongoing Project</a>
     <a href="membership_request.php" class="btn">Membership Request</a>
     <a href="volunteer_request_admin.php" class="btn">Volunteer Request</a>

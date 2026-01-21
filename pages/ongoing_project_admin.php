@@ -184,6 +184,21 @@ $result = $conn->query("SELECT * FROM ongoing_project ORDER BY id DESC");
   a.back-dashboard:hover {
     color: white;
   }
+
+  /* Print styles: hide form/buttons/links, optimize table for PDF */
+  @media print {
+    body { background: #fff; color: #000; padding: 0; }
+    .add-project,
+    .delete-btn,
+    .back-dashboard,
+    .print-btn,
+    form[onsubmit] { display: none !important; }
+    .container { box-shadow: none; background: #fff; padding: 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; color: #000; }
+    thead { background: #eee; }
+    h1 { color: #000; }
+  }
 </style>
 </head>
 <body>
@@ -197,7 +212,13 @@ $result = $conn->query("SELECT * FROM ongoing_project ORDER BY id DESC");
     </p>
   <?php endif; ?>
 
-  <form class="add-project" method="POST" action="ongoing_project.php">
+  <!-- Print to PDF button (simple, same as completed project page) -->
+  <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+    <button type="button" class="print-btn" style="background:#2b6cb0; border:none; color:white; font-weight:600; padding:10px 18px; border-radius:8px; cursor:pointer;" onclick="window.print()">Print to PDF</button>
+  </div>
+
+  <!-- Fix form action to this admin page -->
+  <form class="add-project" method="POST" action="ongoing_project_admin.php">
     <input type="text" name="title" placeholder="Project Title" required />
     <textarea name="description" placeholder="Project Description"></textarea>
     <button type="submit" name="add_project">Add Project</button>

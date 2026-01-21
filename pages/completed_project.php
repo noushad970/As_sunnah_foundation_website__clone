@@ -8,18 +8,17 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 
 // DB connection info
 
-$host = 'sql100.infinityfree.com';
-$user = 'if0_39322565';
-$pass = '7HjHzktlk7X5hCy';
-$db   = 'if0_39322565_assunnah';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db   = 'assunnah';
 
-// Connect to DB
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle new project addition
+// Handle new completed project addition
 $add_message = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_project'])) {
     $title = trim($_POST['title']);
@@ -30,26 +29,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_project'])) {
         $stmt = $conn->prepare("INSERT INTO projects (title, description) VALUES (?, ?)");
         $stmt->bind_param("ss", $title, $description);
         if ($stmt->execute()) {
-            $add_message = "✅ Project added successfully.";
+            $add_message = "✅ Completed project added successfully.";
         } else {
-            $add_message = "❌ Error adding project.";
+            $add_message = "❌ Error adding completed project.";
         }
         $stmt->close();
     }
 }
 
-// Handle deletion
+// Handle deletion from completed projects
 if (isset($_GET['delete_id'])) {
     $delete_id = intval($_GET['delete_id']);
     $stmt = $conn->prepare("DELETE FROM projects WHERE id = ?");
     $stmt->bind_param("i", $delete_id);
     $stmt->execute();
     $stmt->close();
-    header("Location: ongoing_project.php"); // refresh to avoid resubmission
+    header("Location: completed_project.php"); // refresh to avoid resubmission
     exit();
 }
 
-// Fetch all projects
+// Fetch all completed projects
 $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
 ?>
 
@@ -58,7 +57,7 @@ $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ongoing Projects</title>
+<title>Completed Projects</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -185,12 +184,44 @@ $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
   a.back-dashboard:hover {
     color: white;
   }
+
+  /* Print styles: hide form/buttons/links, optimize table for PDF */
+  @media print {
+    body {
+      background: #fff;
+      color: #000;
+      padding: 0;
+    }
+    .add-project,
+    .delete-btn,
+    .back-dashboard,
+    .print-btn,
+    form[onsubmit] {
+      display: none !important;
+    }
+    .container {
+      box-shadow: none;
+      background: #fff;
+      padding: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      color: #000;
+    }
+    thead { background: #eee; }
+    h1 { color: #000; }
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>Ongoing Projects</h1>
+  <h1>Completed Projects</h1>
 
   <?php if ($add_message): ?>
     <p class="message <?php echo strpos($add_message, '✅') === 0 ? 'success' : 'error'; ?>">
@@ -198,11 +229,16 @@ $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
     </p>
   <?php endif; ?>
 
-  <form class="add-project" method="POST" action="ongoing_project.php">
+  <form class="add-project" method="POST" action="completed_project.php">
     <input type="text" name="title" placeholder="Project Title" required />
     <textarea name="description" placeholder="Project Description"></textarea>
-    <button type="submit" name="add_project">Add Project</button>
+    <button type="submit" name="add_project">Add Completed Project</button>
   </form>
+
+  <!-- Print to PDF button -->
+  <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+    <button type="button" class="print-btn" style="background:#2b6cb0; border:none; color:white; font-weight:600; padding:10px 18px; border-radius:8px; cursor:pointer;" onclick="window.print()">Print to PDF</button>
+  </div>
 
   <table>
     <thead>
@@ -230,7 +266,7 @@ $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
         <?php endwhile; ?>
       <?php else: ?>
         <tr>
-          <td colspan="4" style="text-align:center;">No projects found.</td>
+          <td colspan="4" style="text-align:center;">No completed projects found.</td>
         </tr>
       <?php endif; ?>
     </tbody>

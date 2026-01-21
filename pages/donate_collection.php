@@ -213,19 +213,38 @@ $conn->close();
     0% { opacity: 0; transform: translateY(30px); }
     100% { opacity: 1; transform: translateY(0); }
   }
+
+  /* Print styles: hide controls, clean table for PDF */
+  @media print {
+    body { background: #fff; color: #000; }
+    header, .filter-section, .pagination, .print-btn, .back { display: none !important; }
+    main { box-shadow: none; background: #fff; padding: 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; color: #000; }
+    th { background: #eee; }
+  }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Donation Collection</h1>
-  <div>
+  <div style="display:flex; gap:10px; align-items:center;">
     <span class="total-completed">Total Completed: <?php echo number_format($totalCompleted, 2); ?> BDT</span>
-    <form method="POST" action="adminPage.php">
+    <form method="POST" action="adminPage.php" style="display:inline;">
       <button type="submit" class="back">Back</button>
     </form>
+    <!-- Simple Print to PDF button -->
+    <button type="button" class="print-btn" style="background:#2b6cb0; border:none; color:white; font-weight:600; padding:10px 18px; border-radius:8px; cursor:pointer;">Print to PDF</button>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.print-btn');
+    if (btn) btn.addEventListener('click', () => window.print());
+  });
+</script>
 
 <main>
   <h2>Donation Records</h2>

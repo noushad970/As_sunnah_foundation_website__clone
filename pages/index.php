@@ -38,12 +38,16 @@
 
 
 <?php
-$host = 'sql100.infinityfree.com';
-$user = 'if0_39322565';
-$pass = '7HjHzktlk7X5hCy';
-$db   = 'if0_39322565_assunnah';
+// $host = 'sql100.infinityfree.com';
+// $user = 'if0_39322565';
+// $pass = '7HjHzktlk7X5hCy';
+// $db   = 'if0_39322565_assunnah';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db   = 'assunnah';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -117,12 +121,12 @@ $default_project = !empty($projects) ? array_key_first($projects) : "";
 <link rel="stylesheet" href="../assets/css/ongoing_project.css">
 
 <?php
-$host = 'sql100.infinityfree.com';
-$user = 'if0_39322565';
-$pass = '7HjHzktlk7X5hCy';
-$db   = 'if0_39322565_assunnah';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db   = 'assunnah';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
