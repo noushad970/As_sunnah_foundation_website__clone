@@ -1,3 +1,4 @@
+<?php if (session_status() === PHP_SESSION_NONE) { session_start(); } ?>
 <!-- header.php -->
 <style>
     /* style.css */
@@ -51,6 +52,11 @@
     color: white;
     text-decoration: none;
     border-radius: 3px;
+}
+.user-name {
+    margin: 0 8px;
+    color: #0a773d;
+    font-weight: 600;
 }
 .main-nav {
     background-color: #0a4724;
@@ -116,7 +122,13 @@
             <div class="language-buttons">
             </div>
             <div class="account-buttons">
-                <a href="../pages/adminsignin.php" class="btn">Admin</a>
+                <?php if (!empty($_SESSION['user_name'])): ?>
+                    <span class="user-name">Hello, <?= htmlspecialchars($_SESSION['user_name']); ?></span>
+                    <a href="../pages/logoutAdmin.php" class="btn">Logout</a>
+                <?php else: ?>
+                    <a href="../pages/adminsignin.php" class="btn">Admin</a>
+                    <a href="../pages/login.php" class="btn">Login</a>
+                <?php endif; ?>
                 <a href="../pages/donate.php" class="btn">Donate</a>
             </div>
         </div>

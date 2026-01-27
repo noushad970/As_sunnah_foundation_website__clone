@@ -89,7 +89,7 @@ if ($code == 200) {
                 echo "<h2>Payment Successful!</h2>";
                 echo "Amount: " . htmlspecialchars($amount) . " BDT<br>";
                 echo "Transaction ID: " . htmlspecialchars($tran_id) . "<br><br>";
-                echo "<a href='https://clonesunnah.rf.gd/index.php' style='display: inline-block; padding: 10px 20px; background-color: #008e48; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;'>Go to Home Page</a>";
+                echo "<a href='http://localhost/assunna/index.php' style='display: inline-block; padding: 10px 20px; background-color: #008e48; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;'>Go to Home Page</a>";
                 echo "</div>";
             } else {
                 echo "Error updating payment status: " . htmlspecialchars($conn->error);
@@ -107,7 +107,7 @@ if ($code == 200) {
                 echo "<div style='text-align: center; padding: 20px; font-family: Arial, sans-serif;'>";
                 echo "<h2>Payment Cancelled!</h2>";
                 echo "Transaction ID: " . htmlspecialchars($tran_id) . "<br><br>";
-                echo "<a href='https://clonesunnah.rf.gd/index.php' style='display: inline-block; padding: 10px 20px; background-color: #ff4444; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;'>Return to Home Page</a>";
+                echo "<a href='http://localhost/assunna/index.php' style='display: inline-block; padding: 10px 20px; background-color: #ff4444; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;'>Return to Home Page</a>";
                 echo "</div>";
             } else {
                 echo "Error updating cancellation status: " . htmlspecialchars($conn->error);

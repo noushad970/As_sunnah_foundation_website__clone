@@ -23,13 +23,13 @@
 <!-- images slider -->
 <div class="slider-box">
     <div class="slider">
-        <img src="../assets/images/image1.jpg" alt="Slide 1">
+        <!-- <img src="../assets/images/image1.jpg" alt="Slide 1">
         <img src="../assets/images/image2.jpg" alt="Slide 2">
         <img src="../assets/images/image3.jpg" alt="Slide 3">
         <img src="../assets/images/image4.jpg" alt="Slide 4">
         <img src="../assets/images/image5.jpg" alt="Slide 5">
         <img src="../assets/images/image6.jpg" alt="Slide 6">
-        <img src="../assets/images/image7.jpg" alt="Slide 7">
+        <img src="../assets/images/image7.jpg" alt="Slide 7"> -->
     </div>
 </div>
 

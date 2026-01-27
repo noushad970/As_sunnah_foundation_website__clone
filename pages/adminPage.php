@@ -145,6 +145,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     <a href="membership_request.php" class="btn">Membership Request</a>
     <a href="volunteer_request_admin.php" class="btn">Volunteer Request</a>
     <a href="donate_collection.php" class="btn">Payment Details</a>
+    <a href="contact_messages.php" class="btn">Contact Messages</a>
   </div>
 </main>
 

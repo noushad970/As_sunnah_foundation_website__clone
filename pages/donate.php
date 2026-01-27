@@ -3,30 +3,31 @@
 // Include database connection at the top
 require_once __DIR__ . '/../includes/db_connect.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['category'])) {
-    $category = $conn->real_escape_string($_POST['category']);
-    $donator_number = $conn->real_escape_string($_POST['donator_number']);
-    $amount = $conn->real_escape_string($_POST['amount']);
-    error_log("Donation amount: " . $amount); // Debug log
+    $category = trim($_POST['category']);
+    $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0.0;
+    error_log('Donation amount: ' . $amount); // Debug log
     // Rest of the code...
     $payment_status = 'Pending';
-    $tran_id = "SSLCZ_TEST_" . uniqid();
+    $tran_id = 'SSLCZ_TEST_' . uniqid();
 
-    $sql = "INSERT INTO donations (category, donator_number, amount, payment_status, tran_id) 
-            VALUES ('$category', '$donator_number', '$amount', '$payment_status', '$tran_id')";
+    // Use prepared statement and remove non-existent column `donator_number`
+    $stmt = $conn->prepare('INSERT INTO donations (category, amount, payment_status, tran_id) VALUES (?, ?, ?, ?)');
+    $stmt->bind_param('sdss', $category, $amount, $payment_status, $tran_id);
 
-    if ($conn->query($sql)) {
+    if ($stmt->execute()) {
         // Redirect to payment page
-        header("Location: ../payment/payment.php?amount=" . urlencode($amount) . "&tran_id=" . urlencode($tran_id));
+        header('Location: ../payment/payment.php?amount=' . urlencode((string)$amount) . '&tran_id=' . urlencode($tran_id));
         exit; // Ensure script stops after redirect
     } else {
-        $error = "Error: " . $conn->error;
+        $error = 'Error: ' . $stmt->error;
     }
+    $stmt->close();
     $conn->close();
 }
 
 
 // Include header after logic (if it contains output)
-include '../includes/header.php';
+include_once '../includes/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -141,8 +142,8 @@ include '../includes/header.php';
     <?php
     // Display error if any
     if (isset($error)) {
-        echo "<p style='color:red;text-align:center;'>$error</p>";
+        echo "<p style='color:red;text-align:center;'>" . htmlspecialchars($error) . "</p>";
     }
-    ?>
+?>
 
-    <?php include '../includes/footer.php'; ?>
+    <?php include_once '../includes/footer.php'; ?>
