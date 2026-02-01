@@ -22,25 +22,26 @@
 
         $conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Create table if it doesn't exist
+        // Create table if it doesn't exist (aligned with query.sql)
         $sql = "CREATE TABLE IF NOT EXISTS membership_applications (
+            id INT(11) PRIMARY KEY AUTO_INCREMENT,
             member_type VARCHAR(50),
             name VARCHAR(100),
             fathers_name VARCHAR(100),
-            probashi BOOLEAN,
+            probashi TINYINT(1),
             phone_number VARCHAR(15),
-            email VARCHAR(100) PRIMARY KEY,
+            email VARCHAR(100),
             occupation VARCHAR(50),
             reference VARCHAR(100),
-            address VARCHAR(200),
+            reference_address VARCHAR(200),
             donation_payment_method VARCHAR(50),
-            membership_status VARCHAR(20) DEFAULT 'pending'
+            membership_status VARCHAR(20)
         )";
 
         if ($conn->query($sql) === TRUE) {
-            // Prepare and bind
-            $stmt = $conn->prepare("INSERT INTO membership_applications (member_type, name, fathers_name, probashi, phone_number, email, occupation, reference, address, donation_payment_method, membership_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
-            $stmt->bind_param("sssississs", $member_type, $name, $fathers_name, $probashi, $phone_number, $email, $occupation, $reference, $address, $donation_payment_method);
+            // Prepare and bind (use reference_address instead of address)
+            $stmt = $conn->prepare("INSERT INTO membership_applications (member_type, name, fathers_name, probashi, phone_number, email, occupation, reference, reference_address, donation_payment_method, membership_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
+            $stmt->bind_param("sssississs", $member_type, $name, $fathers_name, $probashi, $phone_number, $email, $occupation, $reference, $reference_address, $donation_payment_method);
 
             // Set parameters
             $member_type = $_POST['member_type'];
@@ -51,7 +52,7 @@
             $email = $_POST['email'];
             $occupation = $_POST['occupation'];
             $reference = $_POST['reference'];
-            $address = $_POST['address'];
+            $reference_address = $_POST['address']; // map form 'address' to DB 'reference_address'
             $donation_payment_method = $_POST['donation_payment_method'];
 
             // Execute

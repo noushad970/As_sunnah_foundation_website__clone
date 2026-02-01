@@ -2,13 +2,13 @@
 <?php
 // Define content for each section
 $sections = [
-    "Introduction" => "As-Sunnah Foundation is a non-political, non-profitable government-registered organization dedicated to education, da'wah and full human welfare. It was established in 2017 by Shaikh Ahmadullah. He is the chairman of the organization and manages it directly. As-Sunnah Foundation was registered in 2019 from Joint Stock, whose registration number is S-13111/2019. Since then, it has been working rigorously to serve the humanity, reform the society, developing the utmost morality, arrange various activities to build up a neat and clean mentality and ultimately to build up an ideal society following in the footsteps of the Prophet Muhammad, the teacher of humanity, the messenger of human liberation and peace and the ideal of human welfare.",
-    "Principles and Norms" => "One of the goals of As-Sunnah Foundation is to build life and society based on the Qur'an and Sunnah and to propagate and spread authentic knowledge. It is our policy to adopt a moderate approach based on the Qur'an and Sunnah following the path of righteous predecessors.",
-    "Goals and Objectives" => "The ultimate goal of As-Sunnah Foundation is to serve humanity and promote a society rooted in Islamic values, education, and welfare.",
-    "Activities" => "As-Sunnah Foundation organizes various educational programs, charity events, and community welfare initiatives to support the underprivileged and spread awareness.",
-    "Sources of funds and income" => "The foundation relies on donations, grants, and community contributions to fund its activities.",
+    "Introduction" => "Funding Management System is a non-political, non-profitable platform dedicated to education, da'wah and full human welfare. It was established to streamline fundraising, donation tracking, and welfare program management. The system is registered and operates transparently to serve humanity, reform society, develop morality, arrange activities to build a clean mentality, and ultimately to build an ideal society following in the footsteps of the Prophet Muhammad, the teacher of humanity, the messenger of human liberation and peace and the ideal of human welfare.",
+    "Principles and Norms" => "One of the goals of Funding Management System is to build life and society based on the Qur'an and Sunnah and to propagate and spread authentic knowledge. It is our policy to adopt a moderate approach based on the Qur'an and Sunnah following the path of righteous predecessors.",
+    "Goals and Objectives" => "The ultimate goal of Funding Management System is to serve humanity and promote a society rooted in Islamic values, education, and welfare.",
+    "Activities" => "Funding Management System organizes various educational programs, charity events, and community welfare initiatives to support the underprivileged and spread awareness.",
+    "Sources of funds and income" => "The system relies on donations, grants, and community contributions to fund its activities.",
     "Expenditure policy" => "All funds are utilized transparently to maximize the impact on community welfare projects.",
-    "Achievements" => "As-Sunnah Foundation has successfully conducted numerous relief operations and educational programs since its inception."
+    "Achievements" => "Funding Management System has successfully conducted numerous relief operations and educational programs since its inception."
 ];
 
 $default_section = "Introduction";
@@ -19,7 +19,7 @@ $default_section = "Introduction";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About As-Sunnah Foundation</title>
+    <title>About Funding Management System</title>
     
 </head>
 <body>
@@ -57,9 +57,9 @@ $default_section = "Introduction";
         <?php
         foreach ($sections as $key => $value) {
             $escapedContent = addslashes(nl2br(htmlspecialchars($value)));
-            echo "if (section === '$key') contentArea.innerHTML = `<h2>$key</h2><p>$escapedContent</p>`;\n";
+            echo "if (section === '$key') contentArea.innerHTML = `<h2>$key</h2><p>$escapedContent</p>`\n";
         }
-        ?>
+    ?>
     }
 </script>
 </body>

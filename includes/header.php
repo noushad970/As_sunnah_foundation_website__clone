@@ -106,9 +106,9 @@
 <header>
     <div class="top-bar">
         <div class="logo">
-            <img src="../assets/images/logo.png" alt="As-Sunnah Foundation Logo">
+            <img src="../assets/images/logo.jpg" alt="As-Sunnah Foundation Logo">
             <div class="title">
-                <h1>As-Sunnah Foundation Clone by Noushad</h1>
+                <h1>Funding Management System</h1>
                 <p>For Upliftment, With Sunnah</p>
             </div>
         </div>

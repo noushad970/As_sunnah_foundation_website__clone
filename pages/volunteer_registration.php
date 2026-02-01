@@ -25,13 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $occupation = $_POST['occupation'];
     $permanent_district_thana = $_POST['permanent_district_thana'];
     $permanent_address = $_POST['permanent_address'];
-    $present_district_thana = $_POST['present_district_thana'];
     $present_address = $_POST['present_address'];
     $volunteer_for = $_POST['volunteer_for'];
     $special_skill = $_POST['special_skill'];
 
     // Basic validation
-    if (empty($nid_number) || empty($name) || empty($phone_number) || empty($emergency_phone) || empty($email) || empty($volunteer_for) || empty($permanent_district_thana) || empty($permanent_address) || empty($present_district_thana) || empty($present_address)) {
+    if (empty($nid_number) || empty($name) || empty($phone_number) || empty($emergency_phone) || empty($email) || empty($volunteer_for) || empty($permanent_district_thana) || empty($permanent_address) || empty($present_address)) {
         $message = "Please fill all mandatory fields.";
     } else {
         // Check for duplicate nid_number
@@ -50,10 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result_email->num_rows > 0) {
                 $message = "An application with this email already exists.";
             } else {
-                // Insert the new application
-                $sql = "INSERT INTO volunteer_applications (nid_number, name, probashi, phone_number, emergency_phone, email, facebook_link, educational_info, occupation, permanent_district_thana, permanent_address, present_district_thana, present_address, volunteer_for, special_skill) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                // Insert the new application (align column names to schema)
+                $sql = "INSERT INTO volunteer_applications (nid_number, name, probashi, phone_number, emergency_phone, email, facebook_link, educational_info, occupation, permanent_district_thana, permanent_address_text, present_address_text, volunteer_for, special_skill, application_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssissssssssssss", $nid_number, $name, $probashi, $phone_number, $emergency_phone, $email, $facebook_link, $educational_info, $occupation, $permanent_district_thana, $permanent_address, $present_district_thana, $present_address, $volunteer_for, $special_skill);
+                $stmt->bind_param("ssisssssssssss", $nid_number, $name, $probashi, $phone_number, $emergency_phone, $email, $facebook_link, $educational_info, $occupation, $permanent_district_thana, $permanent_address, $present_address, $volunteer_for, $special_skill);
 
                 if ($stmt->execute()) {
                     $message = "Application submitted successfully! Status: Pending.";
